@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 
 import css from './Modal.module.css';
 
@@ -10,19 +10,16 @@ export function Modal({ handleModal, modalImg, modalImgTags }) {
       handleModal();
     }
   }
-  const handleKeyDown = useCallback(
-    event => {
+
+  useEffect(() => {
+    function handleKeyDown(event) {
       if (event.code === 'Escape') {
         handleModal();
       }
-    },
-    [handleModal]
-  );
-
-  useEffect(() => {
+    }
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleKeyDown]);
+  }, [handleModal]);
 
   return (
     <div className={css.Overlay} onClick={handleClick}>
